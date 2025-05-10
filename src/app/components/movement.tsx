@@ -11,19 +11,24 @@ export default function Movement() {
     (event: { key: string }) => {
       if (isMoving) return;
 
-      console.log("This key was pressed: ", event.key);
-      const newX =
-        moveAlongX +
-        (event.key === "ArrowLeft" ? -5 : event.key === "ArrowRight" ? 5 : 0);
+      let newX = moveAlongX;
+
+      if (event.key === "ArrowLeft") {
+        newX -= 5;
+      } else if (event.key === "ArrowRight") {
+        newX += 5;
+      }
+
       setIsMoving(true);
       setMoveAlongX(newX);
-    },
-    [moveAlongX, isMoving]
-  );
 
-  useEffect(() => {
-    setIsMoving(false);
-  }, [moveAlongX]);
+      // This is needed to unmount the IsMoving so the user can press again, better way to do this??
+      setTimeout(() => {
+        setIsMoving(false);
+      }, 1);
+    },
+    [isMoving, moveAlongX]
+  );
 
   useEffect(() => {
     document.addEventListener("keydown", handleKeyPress);
