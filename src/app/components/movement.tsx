@@ -11,7 +11,10 @@ export default function Movement() {
     (event: { key: string }) => {
       if (isMoving) return;
 
-      const newX = moveAlongX + (event.key === "ArrowLeft" ? -5 : 5);
+      console.log("This key was pressed: ", event.key);
+      const newX =
+        moveAlongX +
+        (event.key === "ArrowLeft" ? -5 : event.key === "ArrowRight" ? 5 : 0);
       setIsMoving(true);
       setMoveAlongX(newX);
     },
@@ -23,10 +26,8 @@ export default function Movement() {
   }, [moveAlongX]);
 
   useEffect(() => {
-    // attach the event listener
     document.addEventListener("keydown", handleKeyPress);
 
-    // remove the event listener
     return () => {
       document.removeEventListener("keydown", handleKeyPress);
     };
