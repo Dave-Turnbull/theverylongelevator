@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Movement from "./components/movement";
+import { Movement } from "./components/movement";
+import { motion } from "motion/react";
 
 export default function Home() {
   const [height, setHeight] = useState(0);
@@ -10,7 +11,7 @@ export default function Home() {
 
   useEffect(() => {
     const iterator = setInterval(() => {
-      // setHeight((prev) => ++prev);
+      setHeight((prev) => ++prev);
       setScore((prev) => ++prev);
     });
     return () => {
@@ -51,11 +52,20 @@ export default function Home() {
         <h1 className="font-extrabold text-2xl p-4 text-zinc-800">
           The Very Long Elevator.
         </h1>
-        <Movement />
+
         <div className="h-2 w-10 bg-zinc-800 border-2"></div>
         <div className="flex gap-[1px] border-4 border-b-0 border-zinc-800 p-0.5 pb-0">
-          <div className="w-10 h-32 bg-zinc-800"></div>
-          <div className="w-10 h-32 bg-zinc-800"></div>
+          <Movement />
+          <motion.div
+            initial={{ x: "0%" }}
+            animate={{ x: "-100%" }}
+            className="w-10 h-32 bg-zinc-800"
+          ></motion.div>
+          <motion.div
+            initial={{ x: "0%" }}
+            animate={{ x: "100%" }}
+            className="w-10 h-32 bg-zinc-800"
+          ></motion.div>
         </div>
       </div>
       <div className="w-full min-h-[30dvh] bg-zinc-800"></div>

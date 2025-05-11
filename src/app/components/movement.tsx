@@ -1,9 +1,10 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import Person from "./person";
 
-export default function Movement() {
+export const Movement = () => {
   const [moveAlongX, setMoveAlongX] = useState(0);
   const [isMoving, setIsMoving] = useState(false);
 
@@ -38,5 +39,27 @@ export default function Movement() {
     };
   }, [handleKeyPress]);
 
-  return <Person x={moveAlongX} />;
-}
+  return (
+    <motion.div
+      className="z-10"
+      style={{
+        position: "fixed",
+        zIndex: 1000,
+        pointerEvents: "none",
+        bottom: "30%",
+        left: "49%",
+        transform: "translateX(-50%) translateY(-50%)",
+      }}
+      initial={{ x: "100vw" }}
+      animate={{ x: 0 }}
+      transition={{
+        type: "spring",
+        stiffness: 30,
+        damping: 12,
+        mass: 1.2,
+      }}
+    >
+      <Person x={moveAlongX} />
+    </motion.div>
+  );
+};
